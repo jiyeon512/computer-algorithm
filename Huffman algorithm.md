@@ -36,4 +36,54 @@ title:  "허프만 알고리즘!"
 -baekjoon 1931번 문제 <회의실 배정>
 https://www.acmicpc.net/problem/1931
 
+소스 코드 구현 : https://github.com/jiyeon512/computer-algorithm/blob/master/Huffman%20algorithm.h
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <algorithm>
+#define _CRT_SECURE_NO_WARNINGS
+
+struct arr {
+	int x;
+	int y;
+};
+
+arr array[100000];
+
+bool compare(arr const &a, arr const &b) {
+	if (a.y == b.y) return a.x < b.x;
+	return a.y < b.y;
+}
+
+int main(void) {
+	int i = 0, num = 0, x, y, cnt = 0, cur = 0;
+	scanf("%d", &num);
+
+	for(i = 0; i <num; i++) {
+	scanf("%d", &x);
+	scanf("%d", &y);
+	array[i] = { x, y };
+}
+
+std::sort(array, array + num, compare);
+
+for (i = 0; i < num; i++) {
+	if (i == 0) {
+		cnt++;
+		cur = array[i].y;
+	}
+	else {
+		if (array[i].x >= cur) {
+			cnt++;
+			cur = array[i].y;
+		}
+	}
+}
+printf("%d", cnt);
+}
+
+ 
+구현 하는 방법 : 첫 번째로 쓸 회의실이 끝나는 시간이 가장 짧은 것을 구해야 한다는 것을 파악하고 첫 번째로 쓸 회의실이 끝나는 시간이 가장 짧은 것을 구했다면 그 이후로는 그리디 알고리즘에 맞게 다음으로 짧은 것들을 구해가면 된다. 입력 받은 두 개의 시간을 배얄에 넣어서 끝나는 시간을 오름차순으로 정렬한 후 끝나는 시간과 배열의 시작하는 시간을 비교해가며 cnt를 더해주며 구현한다.
+ 
+ 
 
