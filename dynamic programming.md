@@ -69,6 +69,7 @@ title:  "제목!"
 - baekjoon 9461번 문제 <파도반 수열>
 https://www.acmicpc.net/problem/9461
 
+소스 코드 포스팅 : https://github.com/jiyeon512/computer-algorithm/blob/master/dynamic%20programming.h
 
 #include <stdio.h> 
 
