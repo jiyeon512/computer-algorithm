@@ -3,6 +3,7 @@
 # Ford-Fulkerson & Edmonds-Karp Algorithm
 
 ☆ What is Network flow?
+
 그래프의 경로의 길이가 아닌, '용량'의 관점에서 바라보는 시점.
 Source(시작점) -> Sink(도착점)으로 동시에 보낼 수 있는, 데이터나 사물의 최대 양을 구하는 알고리즘 (기존, 최단 거리와 같이 가장 적은 비용을 가지는 경로를 구하거나, 최단 비용을 구하는게 아니다.)
 전체적으로 개념을 이해할때, network의 bandwidth로 대입하면서 생각하는게 좋다.
