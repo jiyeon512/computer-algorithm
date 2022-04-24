@@ -1,6 +1,6 @@
 # computer-algorithm Midterm Exam
 
-# Ford-Fulkerson & Edmonds-Karp Algorithm
+# Ford-Fulkerson Algorithm
 
 ☆ What is Network flow?
 
@@ -121,3 +121,66 @@ cut - Source와 Sink가 다른 집합에 속하도록 그래프의 정점들을 
 
 - 잔여 용량이 없을 때까지, 즉 보낼 수 있는 유량이 없을 때까지 BFS or DFS반복
  
+
+☆ 알고리즘 설명
+
+- 네트워크 유량의 가장 기본적인 알고리즘은, Ford-Fulkerson Algorithmm과 Edmonds-Karp Algorithm이 있습니다.
+
+- 기본적으로 두개의 알고리즈은, brute force algorithm의 특성을 가집니다. 두 알고리즘 모두 아래와 같은 형태의 동작원리를 가지게 됩니다.
+
+1. Source에서 Sink로 가는 경로를 하나 찾습니다.
+
+• 이때 해당 경로는 반드시 여유 용량이 남아 있어야 합니다. 즉 c(a,b) - f(a,b) > 0
+
+2. 찾아낸 경로에 보낼 수 있는 flow을 찾습니다. 보낼 수 있는 최대 flow는 경로에 남은 capacity의 최소값입니다.
+
+• 현재 찾아낸 경로에서 보낼 수 있는 가능한 최대의 flow 값(유량값)은, 경로에 남은 capacity의 최소값이 됩니다. 경로상 Min(c(a,b) - f(a,b))
+
+3. 찾아낸 경로에, 찾아낸 최대 flow을 실제 흘려보냅니다.
+
+• 전체 경로에 f(a,b) += flow을 하게 됩니다.
+
+  ▪ e.g) a - b - c - d 와 같은 경로라면, f(a,b) += flow, f(b,c) += flow, f(c,d) += flow 을 해줍니다.
+  
+• 동시에 '유량의 대칭'조건에 따라서, 역방향 역시 flow을 음수값으로 흘려 보냅니다.
+
+  ▪ e.g) a - b - c- d 와 같은 경로라면, f(b,a) -= flow, f(c,b) -= flow, f(d,c) -= flow을 해줍니다.
+  
+  ▪ 이게 되는 이유는, 가상의 역방향 간선의 capacity는 서살 0이고, 해당 capacity에 -값으로 flow(유량)을 흘려도, 용량의 제한 조건을 넘지 않습니다.
+  
+  ▪ f(b,a) -= flow 일때, 즉 -1(flow) / 0(capacity)형태이고, 이는 c(b,a) - f(b,a) > 0, (0-(-1)) = 1이니깐 조건을 만족합니다.
+  
+ 4. 1번에 해당하는 경로 찾기가 실패하기 전까지 위 1~3번을 반복합니다.
+
+
+☆ 포드-풀커슨 최악의 케이스
+
+![image](https://user-images.githubusercontent.com/101514626/164955344-53d4e602-4a97-4b7b-8472-8da0a1934a8a.png)
+
+위와 같은 그래프가 있다고 가정합니다.
+
+이때 네트워크 알고리즘을 사용하되, 포드-풀커슨을 구현했다고 봅니다.
+
+![image](https://user-images.githubusercontent.com/101514626/164955370-48c32743-380e-4cfe-be66-00ae53b765a5.png)
+
+처음 A -> B -> C -> D 경로를 찾고, flow1을 흘려보냅니다.
+
+![image](https://user-images.githubusercontent.com/101514626/164955386-a34f5f4a-45e6-4130-a015-07840df20212.png)
+
+역간선을 이용해서 A -> C -> B -> D 의 경로가 찾아집니다.
+
+DFS구형산 A -> B -> C에서 막히고, A -> C -> B -> D의 경로가 찾아집니다.
+
+이제 A -> C -> B -> D로 flow 1을 흘려 보냅니다. B -> C는 역간선 C -> B에서 flow가 흐를대 -1이 되어 0/1로 초기화 되었습니다.
+
+그럼 이제 다시 처음 A -> B -> C -> D의 경로가 됩니다.
+
+결국 1000번의 루플 타게 되고 
+
+![image](https://user-images.githubusercontent.com/101514626/164955501-41634225-c607-4e87-a264-2165e433777e.png)
+
+최종 답이 나오게 됩니다.
+
+결국 포드-풀커슨 형태로 경로를 탐색하게 되면, 최악의 경우 flow의 max수치 (위 예제에서는, 1000)만큼 루프를 반복하게 됩니다.
+
+시간복잡도가 결국, O(V+E)F 형태가 됩니다.
